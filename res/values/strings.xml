@@ -1,0 +1,9 @@
+<resources>
+
+    <string name="app_name">YeahApp</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">YeahApp</string>
+    <string name="query">Símanúmer/nafn:</string>
+    <string name="btnSubmit">Leita</string>
+
+</resources>
