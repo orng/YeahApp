@@ -49,7 +49,8 @@ public class MainActivity extends Activity {
     			}
     			
     			String queryString = queryText.getText().toString();
-    			ArrayList<HashMap<String, ArrayList<String>>> results = JaSearcher.search(queryString);
+    			JaSearcher searcher = new JaSearcher();
+    			ArrayList<HashMap<String, ArrayList<String>>> results = searcher.search(queryString);
     			for(int i=0; i < results.size(); i++ )
     			{
     				HashMap<String, ArrayList<String>> item = results.get(i);
