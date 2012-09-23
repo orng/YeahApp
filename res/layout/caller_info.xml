@@ -5,24 +5,45 @@
     android:padding="15dp"
     android:background="@drawable/border" >
 
-    <TextView
-        android:id="@+id/txt_name"
+    <RelativeLayout
+        android:id="@+id/layout_caller_info"
         style="@style/Wrap"
-        android:textSize="14dp"
-        android:textStyle="bold"
-        android:text="Alexander Annas Helgason Nörd" />
+        android:visibility="gone">
 
-    <TextView
-        android:id="@+id/txt_address"
-        style="@style/Wrap"
-        android:layout_below="@id/txt_name"
-        android:textSize="14dp"
-        android:text="Skeiðarvogi 139" />
+        <TextView
+            android:id="@+id/txt_name"
+            style="@style/Wrap"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            android:text="Alexander Annas Helgason Nörd" />
 
-    <TextView
-        android:id="@+id/txt_phoneNumber"
+        <TextView
+            android:id="@+id/txt_address"
+            style="@style/Wrap"
+            android:layout_below="@id/txt_name"
+            android:textSize="14dp"
+            android:text="Skeiðarvogi 139" />
+
+        <TextView
+            android:id="@+id/txt_phoneNumber"
+            style="@style/Wrap"
+            android:layout_below="@id/txt_address"
+            android:text="8499827" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_searching"
         style="@style/Wrap"
-        android:layout_below="@id/txt_address"
-        android:text="8499827" />
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/label_searching"
+            style="@style/Wrap"
+            android:textSize="14dp"
+            android:text="Augnablik, finn upplýsingar um númer: 8499827"/>
+    </LinearLayout>
+
+
 
 </RelativeLayout>

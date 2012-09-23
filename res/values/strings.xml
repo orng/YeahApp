@@ -6,4 +6,8 @@
     <string name="query">Símanúmer/nafn:</string>
     <string name="btnSubmit">Leita</string>
 
+
+
+    <string name="label_searching">Augnablik, finn upplýsingar um númer: {0}</string>
+
 </resources>
