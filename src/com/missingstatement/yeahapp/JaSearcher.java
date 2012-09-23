@@ -10,15 +10,38 @@ import org.jsoup.select.Elements;
 
 public class JaSearcher 
 {
-	static private String URL_STRING = "http://ja.is/m2/?q=";
+	private final String BASE_URL = "http://ja.is";
+	private final String URL_STRING = BASE_URL + "/m2/hvitar/?q=";
+	private String nextUrl;
 	
-	public static ArrayList<HashMap<String, ArrayList<String>>> search(String queryString)
+	public JaSearcher()
+	{
+		nextUrl = null;
+	}
+	
+	public boolean hasNext()
+	{
+		return nextUrl != null;
+	}
+	
+	public ArrayList<HashMap<String, ArrayList<String>>> getNext()
+	{
+		return fetchResult(nextUrl);
+	}
+	
+	public ArrayList<HashMap<String, ArrayList<String>>> search(String queryString)
     {
-    	ArrayList<HashMap<String, ArrayList<String>>> results = new ArrayList<HashMap<String, ArrayList<String>>>();
+		String url = URL_STRING + queryString.replaceAll(" ", "+");
+		return fetchResult(url);
+    }
+	
+	private ArrayList<HashMap<String, ArrayList<String>>> fetchResult(String url)
+	{
+		ArrayList<HashMap<String, ArrayList<String>>> results = new ArrayList<HashMap<String, ArrayList<String>>>();
     	try{
-	    	String urlString = URL_STRING + queryString;
-	    	Document doc = Jsoup.connect(urlString).get();
+	    	Document doc = Jsoup.connect(url).get();
 	    	Elements infos = doc.select("div.inf");	
+	    	Elements pagingLinks = doc.select("div.paging").select("a");
 	    	for(Element info : infos)
 	    	{
 	    		HashMap<String, ArrayList<String>> res = new HashMap<String, ArrayList<String>>();
@@ -30,26 +53,40 @@ public class JaSearcher
 	    		for(Element name : nm)
 	    		{
 	    			names.add(name.text());
-	    			//Log.d("MyApp",name.text());
 	    		}
 	    		
 	    		Elements adrs = info.select("span.adr");
 	    		for(Element adr : adrs)
 	    		{
 	    			address.add(adr.text());
-	    			//Log.d("MyApp",adr.text());
 	    		}
 	    		
 	    		Elements pNrs = info.nextElementSibling().select("a");
 	    		for(Element phoneNr : pNrs)
 	    		{
 	    			phoneNrs.add(phoneNr.text());
-	    			//Log.d("MyApp",phoneNr.text());
 	    		}
 	    		res.put("Names", names);
 	    		res.put("Address", address);
 	    		res.put("PhoneNrs", phoneNrs);
 	    		results.add(res);
+	    	}
+	    	if(!pagingLinks.isEmpty())
+	    	{
+	    		Element lastUrl = pagingLinks.last();
+	    		String linkText = lastUrl.text().replaceAll("\\s","").toLowerCase();
+	    		if(linkText.equals("næsta"))
+	    		{
+	    			nextUrl = BASE_URL + lastUrl.attr("href").replace(" ", "+");
+	    		}
+	    		else
+	    		{
+	    			nextUrl = null;
+	    		}
+	    	}
+	    	else
+	    	{
+	    		nextUrl = null;
 	    	}
     	}
     	catch (Exception e)
@@ -57,5 +94,5 @@ public class JaSearcher
     		e.printStackTrace();
     	}
     	return results;
-    }
+	}
 }
