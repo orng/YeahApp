@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Fill"
+    android:padding="15dp"
+    android:background="@drawable/border" >
+
+    <TextView
+        android:id="@+id/txt_name"
+        style="@style/Wrap"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        android:text="Alexander Annas Helgason Nörd" />
+
+    <TextView
+        android:id="@+id/txt_address"
+        style="@style/Wrap"
+        android:layout_below="@id/txt_name"
+        android:textSize="14dp"
+        android:text="Skeiðarvogi 139" />
+
+    <TextView
+        android:id="@+id/txt_phoneNumber"
+        style="@style/Wrap"
+        android:layout_below="@id/txt_address"
+        android:text="8499827" />
+
+</RelativeLayout>
