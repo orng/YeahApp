@@ -1,12 +1,12 @@
 package com.missingstatement.yeahapp;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class JaSearcher 
 {
@@ -34,7 +34,7 @@ public class JaSearcher
 		String url = URL_STRING + queryString.replaceAll(" ", "+");
 		return fetchResult(url);
     }
-	
+
 	private ArrayList<HashMap<String, ArrayList<String>>> fetchResult(String url)
 	{
 		ArrayList<HashMap<String, ArrayList<String>>> results = new ArrayList<HashMap<String, ArrayList<String>>>();
@@ -75,7 +75,7 @@ public class JaSearcher
 	    	{
 	    		Element lastUrl = pagingLinks.last();
 	    		String linkText = lastUrl.text().replaceAll("\\s","").toLowerCase();
-	    		if(linkText.equals("næsta"))
+	    		if(linkText.equals("nï¿½sta")) //TODO fix encoding
 	    		{
 	    			nextUrl = BASE_URL + lastUrl.attr("href").replace(" ", "+");
 	    		}
