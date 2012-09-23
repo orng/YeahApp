@@ -1,8 +1,5 @@
 package com.missingstatement.yeahapp;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,7 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.missingstatement.yeahapp.JaSearcher;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MainActivity extends Activity {
 	private EditText queryText;
@@ -45,7 +43,7 @@ public class MainActivity extends Activity {
     		case R.id.btnSearch:
     			if(queryText.getText().length() == 0)
     			{
-    				Toast.makeText(this, "Vinsamlegast sláðu inn leitarstreng.", 
+    				Toast.makeText(this, "Vinsamlegast sladu inn leitarstreng.",
     						Toast.LENGTH_LONG).show();	
     				return;
     			}
