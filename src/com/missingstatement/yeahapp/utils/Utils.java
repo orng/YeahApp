@@ -3,6 +3,7 @@ package com.missingstatement.yeahapp.utils;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.widget.Toast;
 
 /**
  * Created with IntelliJ IDEA.
@@ -25,4 +26,10 @@ public class Utils
         }
         return false;
     }
+
+    public static void showToast(Context context, String message)
+    {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+    }
+
 }

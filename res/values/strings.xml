@@ -7,7 +7,15 @@
     <string name="btnSubmit">Leita</string>
 
 
+    <!-- Progress dialog labels -->
+    <string name="label_progress_message">Augnablik, verkfræðingarnir eru á fullu að finna þetta fyrir þig&#8230;</string>
 
-    <string name="label_searching">Augnablik, finn upplýsingar um númer: {0}</string>
+    <!-- Network error labels -->
+    <string name="label_network_error">Ekkert netsamband</string>
+
+    <!-- Search labels -->
+    <string name="label_toast_searching">Augnablik, finn upplýsingar um númer: {0}</string>
+    <string name="label_empty_query">Vinsamlegast sláðu inn einhvern leitarstreng</string>
+    <string name="label_search_hint">Símanúmer eða nafn</string>
 
 </resources>

@@ -13,40 +13,45 @@ public class JaSearcher
 {
 	private final String BASE_URL = "http://ja.is";
 	private final String URL_STRING = BASE_URL + "/m2/hvitar/?q=";
-	private String nextUrl;
+	private String mNextUrl;
 
 	public JaSearcher()
 	{
-		nextUrl = null;
+		mNextUrl = null;
 	}
 	
 	public boolean hasNext()
 	{
-		return nextUrl != null;
+		return mNextUrl != null;
 	}
 	
 	public ArrayList<HashMap<String, ArrayList<String>>> getNext()
 	{
-		return fetchResult(nextUrl);
+		return fetchResult(mNextUrl);
 	}
 
-    public String getNextUrl() {
-        return nextUrl;
-    }
-
-    public String getQueryUrl(String queryString) {
-        return URL_STRING + queryString.replaceAll(" ", "+");
-    }
-
-	public ArrayList<HashMap<String, ArrayList<String>>> search(String url)
+    public String getNextUrl()
     {
+        return mNextUrl;
+    }
+
+	public ArrayList<HashMap<String, ArrayList<String>>> search(String queryString)
+    {
+        String url = getQueryUrl(queryString);
+
 		return fetchResult(url);
+    }
+
+    private String getQueryUrl(String queryString)
+    {
+        return URL_STRING + queryString.replaceAll(" ", "+");
     }
 
 	private ArrayList<HashMap<String, ArrayList<String>>> fetchResult(String url)
 	{
 		ArrayList<HashMap<String, ArrayList<String>>> results = new ArrayList<HashMap<String, ArrayList<String>>>();
-    	try{
+    	try
+        {
 	    	Document doc = Jsoup.connect(url).get();
 	    	Elements infos = doc.select("div.inf");	
 	    	Elements pagingLinks = doc.select("div.paging").select("a");
@@ -83,24 +88,28 @@ public class JaSearcher
 	    	{
 	    		Element lastUrl = pagingLinks.last();
 	    		String linkText = lastUrl.text().replaceAll("\\s","").toLowerCase();
-	    		if(linkText.equals("næsta")) //TODO fix encoding
+	    		if(linkText.equals(Keys.KEY_MORE_RESULTS))
 	    		{
-	    			nextUrl = BASE_URL + lastUrl.attr("href").replace(" ", "+");
+	    			mNextUrl = BASE_URL + lastUrl.attr("href").replace(" ", "+");
 	    		}
 	    		else
 	    		{
-	    			nextUrl = null;
+	    			mNextUrl = null;
 	    		}
 	    	}
 	    	else
 	    	{
-	    		nextUrl = null;
+	    		mNextUrl = null;
 	    	}
     	}
     	catch (Exception e)
     	{
     		e.printStackTrace();
     	}
-    	return results;
+        finally
+        {
+            return results;
+        }
+
 	}
 }

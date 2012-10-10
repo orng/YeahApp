@@ -14,8 +14,9 @@
             android:layout_marginRight="10dp"
             android:padding="10dp"
             android:layout_weight="0.6"
-            android:background="@android:color/white"
-            android:hint="Símanúmer eða nafn" />
+            android:singleLine="true"
+            android:hint="@string/label_search_hint"
+            android:background="@android:color/white"/>
 
         <Button
             android:id="@+id/btn_search"

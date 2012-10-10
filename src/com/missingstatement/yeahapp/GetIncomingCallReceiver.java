@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.missingstatement.yeahapp.networking.SearchHandler;
 import com.missingstatement.yeahapp.networking.SearchTask;
+import com.missingstatement.yeahapp.utils.Keys;
+import com.missingstatement.yeahapp.utils.Utils;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -24,49 +26,55 @@ import java.util.HashMap;
  * Time: 3:34 PM
  * To change this template use File | Settings | File Templates.
  */
-public class GetIncomingCallReceiver extends BroadcastReceiver{
-
+public class GetIncomingCallReceiver extends BroadcastReceiver
+{
     private final String TAG = getClass().getSimpleName();
+    private final int NO_RESULT = 0;
 
     private Context mContext;
-    private SearchTask mSearchTask;
+
     private CallSearchHandler mCallSearchHandler;
     private Toast mCallerInfoToast;
 
-
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(Context context, Intent intent)
+    {
         mContext = context;
 
-        if(mSearchTask == null) {
-            View view = View.inflate(context, R.layout.caller_info, null);
+        View callerInfoView = View.inflate(context, R.layout.caller_info, null);
+        mCallSearchHandler = new CallSearchHandler(callerInfoView);
 
-            mCallSearchHandler = new CallSearchHandler(view);
-            mSearchTask = new SearchTask(mContext, mCallSearchHandler);
-        }
         Log.e(TAG, "Receiving a call!");
+
         TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         IncomingCallPhoneStateListener incomingCallPhoneStateListener = new IncomingCallPhoneStateListener();
         telephonyManager.listen(incomingCallPhoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
     }
 
-    private class CallSearchHandler implements SearchHandler {
-
+    private class CallSearchHandler implements SearchHandler
+    {
         private View view;
-        public CallSearchHandler(View view) {
+
+        public CallSearchHandler(View view)
+        {
             this.view = view;
         }
 
         @Override
-        public void handleSearchResponse(ArrayList<HashMap<String, ArrayList<String>>> results) {
-
-
+        public void handleSearchResponse(ArrayList<HashMap<String, ArrayList<String>>> results)
+        {
             Log.e(TAG, "handling response...");
+            Log.e(TAG, "results: " + results.size());
+
+            if(results.size() ==  NO_RESULT)
+            {
+                return;
+            }
             HashMap<String, ArrayList<String>> result = results.get(0);
 
-            ArrayList<String> names = result.get("Names");
-            ArrayList<String> addresses = result.get("Address");
-            ArrayList<String> phoneNumbers = result.get("PhoneNrs");
+            ArrayList<String> names = result.get(Keys.KEY_NAMES);
+            ArrayList<String> addresses = result.get(Keys.KEY_ADDRESSES);
+            ArrayList<String> phoneNumbers = result.get(Keys.KEY_PHONE_NUMBERS);
 
             Log.e(TAG, "names: " + names);
             Log.e(TAG, "addresses: " + addresses);
@@ -79,41 +87,49 @@ public class GetIncomingCallReceiver extends BroadcastReceiver{
             (view.findViewById(R.id.layout_searching)).setVisibility(View.GONE);
             (view.findViewById(R.id.layout_caller_info)).setVisibility(View.VISIBLE);
 
-           mCallerInfoToast.cancel();
+            mCallerInfoToast.cancel();
 
             Toast test = new Toast(mContext);
             test.setView(view);
             test.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
             test.setDuration(Toast.LENGTH_LONG);
             test.show();
-
         }
     }
 
-    private class IncomingCallPhoneStateListener extends PhoneStateListener {
-
+    private class IncomingCallPhoneStateListener extends PhoneStateListener
+    {
         private final String TAG = getClass().getSimpleName();
 
         @Override
-        public void onCallStateChanged(int state, String incomingNumber) {
-
-            switch(state) {
+        public void onCallStateChanged(int state, String incomingNumber)
+        {
+            switch(state)
+            {
                 case TelephonyManager.CALL_STATE_RINGING:
+
+                    if( !Utils.isNetworkOn(mContext) )
+                    {
+                        return;
+                    }
+
                     Log.e(TAG, "Incoming number: " + incomingNumber);
 
                     View view = View.inflate(mContext, R.layout.caller_info, null);
 
                     (view.findViewById(R.id.layout_searching)).setVisibility(View.VISIBLE);
-                    String searchText = mContext.getString(R.string.label_searching);
+                    String searchText = mContext.getString(R.string.label_toast_searching);
 
                     searchText = MessageFormat.format(searchText, incomingNumber);
 
                     ((TextView) view.findViewById(R.id.label_searching)).setText(searchText);
 
-                    mSearchTask.execute(incomingNumber);
+                    boolean isNextTask = false;
+                    SearchTask searchTask = new SearchTask(mContext, mCallSearchHandler, isNextTask);
+                    searchTask.execute(incomingNumber);
 
-
-                    if(mCallerInfoToast == null) {
+                    if(mCallerInfoToast == null)
+                    {
                         mCallerInfoToast = new Toast(mContext);
                         mCallerInfoToast.setDuration(10000);
                         mCallerInfoToast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);

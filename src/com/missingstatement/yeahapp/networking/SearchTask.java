@@ -15,24 +15,40 @@ import java.util.HashMap;
  * Time: 8:09 PM
  * To change this template use File | Settings | File Templates.
  */
-public class SearchTask extends AsyncTask<String, Void, ArrayList<HashMap<String, ArrayList<String>>>> {
-
+public class SearchTask extends AsyncTask<String, Void, ArrayList<HashMap<String, ArrayList<String>>>>
+{
     private SearchHandler mSearchHandler;
     private JaSearcher mJaSearcher;
 
     private Context mContext;
+    private boolean mIsNext;
     private ProgressDialog mProgressDialog;
 
-    public SearchTask(Context context, SearchHandler handler) {
-        this(context, new JaSearcher(), handler);
+    /**
+     * Creates a new Search task for searching on mja.is. A {@link ProgressDialog} is only shown
+     * if {@link #initProgressDialog(String, String)} has been called
+     * @param context the context in which the task is created in
+     * @param handler the handler to handle the results
+     * @param isNext set to true only and only if we are querying more results
+     */
+    public SearchTask(Context context, SearchHandler handler, boolean isNext)
+    {
+        this(context, new JaSearcher(), handler, isNext);
     }
 
-    public SearchTask(Context context, JaSearcher jaSearcher, SearchHandler handler)  {
+    public SearchTask(Context context, JaSearcher jaSearcher, SearchHandler handler, boolean isNext)
+    {
         mContext = context;
         mSearchHandler = handler;
         mJaSearcher = jaSearcher;
+        mIsNext = isNext;
     }
 
+    /**
+     * Initalized a {@link ProgressDialog}, to display to the user when searching
+     * @param title title of the dialog
+     * @param message message of the dialog
+     */
     public void initProgressDialog(String title, String message)
     {
         mProgressDialog = new ProgressDialog(mContext);
@@ -50,11 +66,18 @@ public class SearchTask extends AsyncTask<String, Void, ArrayList<HashMap<String
             mProgressDialog.show();
         }
     }
-    @Override
-    protected ArrayList<HashMap<String, ArrayList<String>>> doInBackground(String... urls)
-    {
 
-        return mJaSearcher.search(urls[0]);
+    @Override
+    protected ArrayList<HashMap<String, ArrayList<String>>> doInBackground(String... queries)
+    {
+        if(mIsNext)
+        {
+            return mJaSearcher.getNext();
+        }
+        else
+        {
+            return mJaSearcher.search(queries[0]);
+        }
     }
 
     @Override
@@ -70,7 +93,8 @@ public class SearchTask extends AsyncTask<String, Void, ArrayList<HashMap<String
         dismissDialog();
     }
 
-    private void dismissDialog() {
+    private void dismissDialog()
+    {
         if(mProgressDialog!=null && mProgressDialog.isShowing())
         {
             mProgressDialog.dismiss();
