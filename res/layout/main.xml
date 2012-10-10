@@ -1,0 +1,36 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Fill">
+
+    <LinearLayout
+        android:id="@+id/layout_search"
+        style="@style/Fill.Width"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentTop="true">
+
+        <EditText
+            android:id="@+id/et_searchQuery"
+            style="@style/Fill.Width"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="10dp"
+            android:layout_weight="0.6"
+            android:background="@android:color/white"
+            android:hint="Símanúmer eða nafn" />
+
+        <Button
+            android:id="@+id/btn_search"
+            style="@style/Wrap"
+            android:layout_marginRight="10dp"
+            android:text="@string/btnSubmit" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/result_list"
+        style="@style/Fill.Width"
+        android:layout_marginTop="10dp"
+        android:fastScrollEnabled="true"
+        android:layout_below="@id/layout_search"
+        android:dividerHeight="1dp"
+        android:divider="#FFFFFF" />
+</RelativeLayout>

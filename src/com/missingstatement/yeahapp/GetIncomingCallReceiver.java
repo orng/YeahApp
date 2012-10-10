@@ -42,7 +42,7 @@ public class GetIncomingCallReceiver extends BroadcastReceiver{
             View view = View.inflate(context, R.layout.caller_info, null);
 
             mCallSearchHandler = new CallSearchHandler(view);
-            mSearchTask = new SearchTask(mCallSearchHandler);
+            mSearchTask = new SearchTask(mContext, mCallSearchHandler);
         }
         Log.e(TAG, "Receiving a call!");
         TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);

@@ -1,5 +1,6 @@
 package com.missingstatement.yeahapp;
 
+import com.missingstatement.yeahapp.utils.Keys;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -8,12 +9,12 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class JaSearcher 
+public class JaSearcher
 {
 	private final String BASE_URL = "http://ja.is";
 	private final String URL_STRING = BASE_URL + "/m2/hvitar/?q=";
 	private String nextUrl;
-	
+
 	public JaSearcher()
 	{
 		nextUrl = null;
@@ -28,10 +29,17 @@ public class JaSearcher
 	{
 		return fetchResult(nextUrl);
 	}
-	
-	public ArrayList<HashMap<String, ArrayList<String>>> search(String queryString)
+
+    public String getNextUrl() {
+        return nextUrl;
+    }
+
+    public String getQueryUrl(String queryString) {
+        return URL_STRING + queryString.replaceAll(" ", "+");
+    }
+
+	public ArrayList<HashMap<String, ArrayList<String>>> search(String url)
     {
-		String url = URL_STRING + queryString.replaceAll(" ", "+");
 		return fetchResult(url);
     }
 
@@ -66,16 +74,16 @@ public class JaSearcher
 	    		{
 	    			phoneNrs.add(phoneNr.text());
 	    		}
-	    		res.put("Names", names);
-	    		res.put("Address", address);
-	    		res.put("PhoneNrs", phoneNrs);
+	    		res.put(Keys.KEY_NAMES, names);
+	    		res.put(Keys.KEY_ADDRESSES, address);
+	    		res.put(Keys.KEY_PHONE_NUMBERS, phoneNrs);
 	    		results.add(res);
 	    	}
 	    	if(!pagingLinks.isEmpty())
 	    	{
 	    		Element lastUrl = pagingLinks.last();
 	    		String linkText = lastUrl.text().replaceAll("\\s","").toLowerCase();
-	    		if(linkText.equals("n�sta")) //TODO fix encoding
+	    		if(linkText.equals("næsta")) //TODO fix encoding
 	    		{
 	    			nextUrl = BASE_URL + lastUrl.attr("href").replace(" ", "+");
 	    		}

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              style="@style/Fill"
+              android:background="#CCCCCC" >
+
+    <TextView
+        android:id="@+id/txt_list_phoneNumber"
+        style="@style/ListItem.Right"
+        android:textColor="@android:color/black"
+        android:text="8499827" />
+
+    <LinearLayout
+        style="@style/ListItem.Left"
+        android:layout_toLeftOf="@id/txt_list_phoneNumber"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/txt_list_name"
+            style="@style/Wrap"
+            android:textColor="@android:color/black"
+            android:maxLines="2"
+            android:textStyle="bold"
+            android:text="blablablabla" />
+
+        <TextView
+            android:id="@+id/txt_list_address"
+            style="@style/Wrap"
+            android:textColor="@android:color/black"
+            android:text="Skeiðarvogi 139" />
+    </LinearLayout>
+
+</RelativeLayout>
