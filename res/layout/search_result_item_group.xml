@@ -2,16 +2,22 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 style="@style/Fill.Width"
-                android:background="@android:color/transparent">
+                android:background="@drawable/search_result_bg_group">
+
+    <ImageView
+        android:id="@+id/list_indicator"
+        style="@style/ListItem.Right"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/list_search_indicator" />
 
     <TextView
         android:id="@+id/txt_list_phoneNumber"
-        style="@style/ListItem.Right"
+        style="@style/Wrap"
         android:layout_below="@id/txt_name"
         android:layout_marginRight="10dp"
-        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:textColor="@color/search_list_phone_number"
+        android:layout_toLeftOf="@id/list_indicator"
+        android:textColor="@color/search_list_txt_phone_number"
         android:textSize="25dp"
         android:textStyle="bold"
         android:text="8499827" />
@@ -23,7 +29,7 @@
         <TextView
             android:id="@+id/txt_list_name"
             style="@style/Wrap"
-            android:textColor="@color/search_list_name"
+            android:textColor="@color/search_list_txt_name"
             android:maxLines="2"
             android:ellipsize="end"
             android:textSize="16dp"
@@ -33,7 +39,7 @@
             android:id="@+id/txt_list_address"
             style="@style/Wrap"
             android:layout_below="@id/txt_list_name"
-            android:textColor="@color/search_list_address"
+            android:textColor="@color/search_list_txt_address"
             android:text="Skeiðarvogi 139, 104 Reykjavík" />
 
     </RelativeLayout>

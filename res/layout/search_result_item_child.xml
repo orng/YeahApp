@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              style="@style/Fill.Width"
+              android:background="@color/search_list_background_detail">
 
-</LinearLayout>
+
+    <ImageView
+        android:id="@+id/list_icon"
+        style="@style/ListItem.Left"
+        android:src="@drawable/list_icon_phone" />
+
+
+    <Button
+        android:id="@+id/txt_list_action"
+        style="@style/Wrap"
+        android:padding="5dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/list_icon"
+        android:textColor="@color/search_list_txt_action"
+        android:textSize="16dp"
+        android:text="Hringja"
+        android:background="@null"/>
+
+</RelativeLayout>

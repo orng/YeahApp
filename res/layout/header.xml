@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent">
+              style="@style/Fill.Width">
+
+    <!-- Home Side -->
+    <RelativeLayout
+            style="@style/Wrap"
+            android:background="@drawable/bg_top_left">
+
+        <ImageButton
+                android:id="@+id/navbtn_home"
+                style="@style/Wrap"
+                android:layout_centerInParent="true"
+                android:background="@drawable/icon_home" />
+
+    </RelativeLayout>
+
+    <!-- Other Side -->
+    <RelativeLayout
+            style="@style/Fill.Width"
+            android:background="@drawable/bg_top_right" />
 
 </LinearLayout>

@@ -1,7 +1,8 @@
 <resources>
+    <color name="search_list_txt_phone_number">#006600</color>
+    <color name="search_list_txt_name">#4c3f38</color>
+    <color name="search_list_txt_address">#7b7674</color>
+    <color name="search_list_txt_action">#5c5c5c</color>
 
-    <color name="search_list_divider">#3b933b</color>
-    <color name="search_list_phone_number">006600</color>
-    <color name="search_list_name">#4c3f38</color>
-    <color name=""
+    <color name="search_list_background_detail">#ededed</color>
 </resources>

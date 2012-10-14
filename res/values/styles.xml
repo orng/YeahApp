@@ -14,13 +14,16 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="Activity" parent="Fill">
+        <item name="android:background">@drawable/background</item>
+    </style>
+
     <style name="Button" parent="Wrap">
     </style>
 
     <style name="ListItem.Right" parent="Wrap">
         <item name="android:layout_centerVertical">true</item>
         <item name="android:layout_alignParentRight">true</item>
-        <item name="android:layout_margin">10dp</item>
     </style>
 
     <style name="ListItem.Left" parent="Wrap">

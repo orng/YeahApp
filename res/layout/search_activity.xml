@@ -1,37 +1,40 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Fill">
+                style="@style/Activity">
+
+
+    <include
+        android:id="@+id/layout_header"
+        layout="@layout/header" />
 
     <LinearLayout
         android:id="@+id/layout_search"
-        style="@style/Fill.Width"
-        android:layout_marginTop="20dp"
-        android:layout_alignParentTop="true">
+        style="@style/Wrap"
+        android:layout_below="@id/layout_header"
+        android:background="@drawable/search_bg_input">
 
         <EditText
             android:id="@+id/et_searchQuery"
-            style="@style/Fill.Width"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:padding="10dp"
-            android:layout_weight="0.6"
-            android:singleLine="true"
-            android:hint="@string/label_search_hint"
-            android:background="@android:color/white"/>
-
-        <Button
-            android:id="@+id/btn_search"
             style="@style/Wrap"
-            android:layout_marginRight="10dp"
-            android:text="@string/btnSubmit" />
-
+            android:padding="5dp"
+            android:singleLine="true"
+            android:hint="@string/label_search_hint" />
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/result_list"
+    <ImageButton
+        android:id="@+id/btn_search"
+        style="@style/Wrap"
+        android:layout_marginRight="10dp"
+        android:text="@string/btnSubmit"
+        android:background="@drawable/btn_search"/>
+
+    <ExpandableListView
+        android:id="@+id/list_search_results"
         style="@style/Fill.Width"
-        android:layout_marginTop="10dp"
         android:fastScrollEnabled="true"
         android:layout_below="@id/layout_search"
-        android:dividerHeight="1dp"
-        android:divider="#FFFFFF" />
+        android:listSelector="@android:color/transparent"
+        android:groupIndicator="@android:color/transparent"
+        android:childDivider="@drawable/list_search_divider"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@drawable/list_search_divider" />
 </RelativeLayout>

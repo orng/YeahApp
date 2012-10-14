@@ -15,6 +15,7 @@
             style="@style/Wrap"
             android:textSize="14dp"
             android:textStyle="bold"
+            android:textColor="@color/search_list_txt_name"
             android:text="Alexander Annas Helgason Nörd" />
 
         <TextView
@@ -22,12 +23,14 @@
             style="@style/Wrap"
             android:layout_below="@id/txt_name"
             android:textSize="14dp"
+            android:textColor="@color/search_list_txt_address"
             android:text="Skeiðarvogi 139" />
 
         <TextView
             android:id="@+id/txt_phoneNumber"
             style="@style/Wrap"
             android:layout_below="@id/txt_address"
+            android:textColor="@color/search_list_txt_phone_number"
             android:text="8499827" />
 
     </RelativeLayout>
@@ -41,6 +44,7 @@
             android:id="@+id/label_searching"
             style="@style/Wrap"
             android:textSize="14dp"
+            android:textColor="@color/search_list_txt_name"
             android:text="Augnablik, finn upplýsingar um númer: 8499827"/>
     </LinearLayout>
 

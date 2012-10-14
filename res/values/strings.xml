@@ -18,4 +18,11 @@
     <string name="label_empty_query">Vinsamlegast sláðu inn einhvern leitarstreng</string>
     <string name="label_search_hint">Símanúmer eða nafn</string>
 
+    <!-- Search results strings -->
+    <string name="action_call">Hringja</string>
+    <string name="action_sms">Skilaboð</string>
+    <string name="action_contact">Vista sem tengilið</string>
+
+    <string name="label_select_number_to_call">Veldu númer til að hringja í:</string>
+    <string name="label_select_number_to_sms">Veldu númer til að senda sms:</string>
 </resources>
