@@ -27,7 +27,16 @@ public class JaSearcher
 	
 	public ArrayList<HashMap<String, ArrayList<String>>> getNext()
 	{
-		return fetchResult(mNextUrl);
+		ArrayList<HashMap<String, ArrayList<String>>> results = fetchResult(mNextUrl);
+		int tryCount = 0;
+		//TODO: move magic number: 5 to appropriate location
+		while(results == null && tryCount < 5)
+		{
+			//assuming the error was a connection error
+			//try again
+			results = fetchResult(mNextUrl);
+		}
+		return results;
 	}
 
     public String getNextUrl()
@@ -61,11 +70,17 @@ public class JaSearcher
 	    		ArrayList<String> names = new ArrayList<String>();
 	    		ArrayList<String> address = new ArrayList<String>();
 	    		ArrayList<String> phoneNrs = new ArrayList<String>();
+	    		ArrayList<String> titles = new ArrayList<String>();
 	    		
-	    		Elements nm = info.select("span.nm");
+	    		Elements nm = info.select("span.nm").select("strong");
 	    		for(Element name : nm)
 	    		{
-	    			names.add(name.text());
+	    			names.add(name.text());	
+	    			Element theTitle = name.nextElementSibling();
+	    			if(theTitle != null)
+	    			{
+	    				titles.add(theTitle.text());
+	    			}	
 	    		}
 	    		
 	    		Elements adrs = info.select("span.adr");
@@ -82,6 +97,7 @@ public class JaSearcher
 	    		res.put(Keys.KEY_NAMES, names);
 	    		res.put(Keys.KEY_ADDRESSES, address);
 	    		res.put(Keys.KEY_PHONE_NUMBERS, phoneNrs);
+	    		res.put(Keys.KEY_TITLES, titles);
 	    		results.add(res);
 	    	}
 	    	if(!pagingLinks.isEmpty())
@@ -106,10 +122,9 @@ public class JaSearcher
     	{
     		e.printStackTrace();
     	}
-        finally
-        {
-            return results;
-        }
-
+    	finally
+    	{
+    		return results;
+    	}
 	}
 }

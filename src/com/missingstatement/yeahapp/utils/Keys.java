@@ -12,6 +12,7 @@ public final class Keys {
     public static final String KEY_PHONE_NUMBERS = "phoneNumbers";
     public static final String KEY_NAMES = "names";
     public static final String KEY_ADDRESSES = "addresses";
+    public static final String KEY_TITLES = "titles";
 
     public static final String KEY_MORE_RESULTS = "næsta";
 }
