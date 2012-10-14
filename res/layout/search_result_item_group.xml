@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                style="@style/Fill.Width"
+                android:background="@android:color/transparent">
+
+    <TextView
+        android:id="@+id/txt_list_phoneNumber"
+        style="@style/ListItem.Right"
+        android:layout_below="@id/txt_name"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:textColor="@color/search_list_phone_number"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:text="8499827" />
+
+    <RelativeLayout
+        style="@style/ListItem.Left"
+        android:layout_toLeftOf="@id/txt_list_phoneNumber">
+
+        <TextView
+            android:id="@+id/txt_list_name"
+            style="@style/Wrap"
+            android:textColor="@color/search_list_name"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textSize="16dp"
+            android:text="Sad Engineer Test nafn of Aeesomenesssss" />
+
+        <TextView
+            android:id="@+id/txt_list_address"
+            style="@style/Wrap"
+            android:layout_below="@id/txt_list_name"
+            android:textColor="@color/search_list_address"
+            android:text="Skeiðarvogi 139, 104 Reykjavík" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
