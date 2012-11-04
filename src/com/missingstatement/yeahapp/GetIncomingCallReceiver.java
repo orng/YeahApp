@@ -3,6 +3,9 @@ package com.missingstatement.yeahapp;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.ContactsContract.PhoneLookup;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -19,13 +22,6 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * Created with IntelliJ IDEA.
- * User: alexander
- * Date: 9/23/12
- * Time: 3:34 PM
- * To change this template use File | Settings | File Templates.
- */
 public class GetIncomingCallReceiver extends BroadcastReceiver
 {
     private final String TAG = getClass().getSimpleName();
@@ -60,7 +56,6 @@ public class GetIncomingCallReceiver extends BroadcastReceiver
             this.view = view;
         }
 
-        @Override
         public void handleSearchResponse(ArrayList<HashMap<String, ArrayList<String>>> results)
         {
             Log.e(TAG, "handling response...");
@@ -100,6 +95,29 @@ public class GetIncomingCallReceiver extends BroadcastReceiver
     private class IncomingCallPhoneStateListener extends PhoneStateListener
     {
         private final String TAG = getClass().getSimpleName();
+        
+        public boolean numberInContacts(String number)
+        {
+        	Uri lookupUri = Uri.withAppendedPath(
+        	PhoneLookup.CONTENT_FILTER_URI, 
+        	Uri.encode(number));
+        	String[] mPhoneNumberProjection = { PhoneLookup._ID, PhoneLookup.NUMBER, PhoneLookup.DISPLAY_NAME };
+        	Cursor cur = mContext.getContentResolver().query(lookupUri,mPhoneNumberProjection, null, null, null);
+        	try 
+        	{
+        	   if (cur.moveToFirst()) 
+        	   {
+        	      return true;
+        	   }
+        	} 
+        	finally 
+        	{
+        		if (cur != null)
+        			cur.close();
+        	}
+        	return false;
+        }
+        
 
         @Override
         public void onCallStateChanged(int state, String incomingNumber)
@@ -111,6 +129,11 @@ public class GetIncomingCallReceiver extends BroadcastReceiver
                     if( !Utils.isNetworkOn(mContext) )
                     {
                         return;
+                    }
+                    
+                    if(numberInContacts(incomingNumber))
+                    {
+                    	return;
                     }
 
                     Log.e(TAG, "Incoming number: " + incomingNumber);
