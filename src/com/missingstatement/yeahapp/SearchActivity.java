@@ -32,7 +32,7 @@ public class SearchActivity extends Activity {
 
     private JaSearcher mJaSearcher;
 
-    @Override
+    
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_activity);
@@ -63,12 +63,12 @@ public class SearchActivity extends Activity {
         mResultList.addFooterView(footerView);
         mResultList.setAdapter(mSearchResultAdapter);
         mResultList.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
+            
             public void onScrollStateChanged(AbsListView absListView, int i) {
                 //To change body of implemented methods use File | Settings | File Templates.
             }
 
-            @Override
+            
             public void onScroll(AbsListView lw, final int firstVisibleItem, final int visibleItemCount, final int totalItemCount) {
                 switch (lw.getId()) {
                     case R.id.list_search_results:
@@ -124,7 +124,7 @@ public class SearchActivity extends Activity {
     }
 
     private class SearchResultHandler implements SearchHandler {
-        @Override
+        
         public void handleSearchResponse(ArrayList<HashMap<String, ArrayList<String>>> results) {
             mSearchResult.clear();
             mSearchResult.addAll(results);
@@ -135,7 +135,7 @@ public class SearchActivity extends Activity {
     }
 
     private class NextSearchResultHandler implements SearchHandler {
-        @Override
+        
         public void handleSearchResponse(ArrayList<HashMap<String, ArrayList<String>>> results) {
             mSearchResult.addAll(results);
             mSearchResultAdapter.notifyDataSetChanged();
@@ -162,42 +162,42 @@ public class SearchActivity extends Activity {
             this.searchResults = searchResults;
         }
 
-        @Override
+        
         public int getGroupCount() {
             return searchResults.size();
         }
 
-        @Override
+        
         public int getChildrenCount(int position) {
             return NUM_RESULT_OPTIONS;
         }
 
-        @Override
+        
         public Object getGroup(int position) {
             return null;  //To change body of implemented methods use File | Settings | File Templates.
         }
 
-        @Override
+        
         public Object getChild(int i, int i1) {
             return null;  //To change body of implemented methods use File | Settings | File Templates.
         }
 
-        @Override
+        
         public long getGroupId(int i) {
             return 0;  //To change body of implemented methods use File | Settings | File Templates.
         }
 
-        @Override
+        
         public long getChildId(int i, int i1) {
             return 0;  //To change body of implemented methods use File | Settings | File Templates.
         }
 
-        @Override
+        
         public boolean hasStableIds() {
             return false;  //To change body of implemented methods use File | Settings | File Templates.
         }
 
-        @Override
+        
         public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
             View groupView = convertView;
 
@@ -246,7 +246,7 @@ public class SearchActivity extends Activity {
             return groupView;
         }
 
-        @Override
+        
         public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
             View childView = convertView;
 
@@ -278,7 +278,7 @@ public class SearchActivity extends Activity {
 
             //Handle on click depending on action pressed
             childView.setOnClickListener(new View.OnClickListener() {
-                @Override
+                
                 public void onClick(View view) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                     switch (childPosition) {
@@ -289,7 +289,7 @@ public class SearchActivity extends Activity {
                             } else {
                                 builder.setTitle(getString(R.string.label_select_number_to_call));
                                 builder.setItems(phoneNumbersArray, new DialogInterface.OnClickListener() {
-                                    @Override
+                                    
                                     public void onClick(DialogInterface dialog, int position) {
                                         callNumber(phoneNumbers.get(position));
                                     }
@@ -304,7 +304,7 @@ public class SearchActivity extends Activity {
                             } else {
                                 builder.setTitle(getString(R.string.label_select_number_to_sms));
                                 builder.setItems(phoneNumbersArray, new DialogInterface.OnClickListener() {
-                                    @Override
+                                    
                                     public void onClick(DialogInterface dialog, int position) {
                                         sendSms(phoneNumbers.get(position));
                                     }
@@ -313,7 +313,19 @@ public class SearchActivity extends Activity {
                             }
                             break;
                         case POSITION_ACTION_SAVE_CONTACT:
-                            Utils.showToast(view.getContext(), "Ekki virkt ennþá");
+                        	boolean isContactAdded = Utils.addContact(view.getContext(),
+                        			phoneNumbers.get(FIRST_ENTRY),
+                        			addresses.get(FIRST_ENTRY),
+                        			names.get(FIRST_ENTRY)
+                        		);
+                        	if(isContactAdded)
+                        	{
+                        		Utils.showToast(view.getContext(), "Tengiliður vistaður");
+                        	}
+                        	else
+                        	{
+                        		Utils.showToast(view.getContext(), "Úúps, ekki tókst að vista tengilið");
+                        	}
                     }
 
                 }
@@ -350,7 +362,7 @@ public class SearchActivity extends Activity {
             startActivity(smsIntent);
         }
 
-        @Override
+        
         public boolean isChildSelectable(int i, int i1) {
             return true;  //To change body of implemented methods use File | Settings | File Templates.
         }
