@@ -12,7 +12,7 @@ import java.util.HashMap;
 public class JaSearcher
 {
 	private final String BASE_URL = "http://ja.is";
-	private final String URL_STRING = BASE_URL + "/m2/hvitar/?q=";
+	private final String URL_STRING = BASE_URL + "/?q=";
 	private String mNextUrl;
 
 	public JaSearcher()
@@ -62,7 +62,7 @@ public class JaSearcher
     	try
         {
 	    	Document doc = Jsoup.connect(url).get();
-	    	Elements infos = doc.select("div.inf");	
+	    	Elements infos = doc.select("div.result");	
 	    	Elements pagingLinks = doc.select("div.paging").select("a");
 	    	for(Element info : infos)
 	    	{
@@ -72,24 +72,33 @@ public class JaSearcher
 	    		ArrayList<String> phoneNrs = new ArrayList<String>();
 	    		ArrayList<String> titles = new ArrayList<String>();
 	    		
-	    		Elements nm = info.select("span.nm").select("strong");
-	    		for(Element name : nm)
+	    		Elements nm = info.select("span.cut");
+	    		if(nm.size() == 0)
 	    		{
-	    			names.add(name.text());	
-	    			Element theTitle = name.nextElementSibling();
-	    			if(theTitle != null)
-	    			{
-	    				titles.add(theTitle.text());
-	    			}	
+	    			//Businesses have have links not spans
+	    			nm = info.select("a.cut");
 	    		}
 	    		
-	    		Elements adrs = info.select("span.adr");
+	    		for(Element name : nm)
+	    		{
+	    			names.add(name.text());
+	    			if (name.children().size() > 0)
+	    			{
+	    				Element theTitle = name.child(0);
+	    				if(theTitle != null)
+	    				{
+	    					titles.add(theTitle.text());
+	    				}
+	    			}
+	    		}
+	    		
+	    		Elements adrs = info.select("a.addressinfo");
 	    		for(Element adr : adrs)
 	    		{
 	    			address.add(adr.text());
 	    		}
 	    		
-	    		Elements pNrs = info.nextElementSibling().select("a");
+	    		Elements pNrs = info.select("a.phone");
 	    		for(Element phoneNr : pNrs)
 	    		{
 	    			phoneNrs.add(phoneNr.text());
